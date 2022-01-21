@@ -6,12 +6,15 @@ package cmd
 
 import (
 	"os"
+  "log"
 
 	"github.com/spf13/cobra"
 	"github.com/mitchellh/go-homedir"
 )
 
 
+
+var dataFile string
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
@@ -50,8 +53,10 @@ func init() {
 
   home, err := homedir.Dir()
   if err != nil {
-
+    log.Println("Unable to detect home directory. Please set data file using --datafile")
   }
+
+  rootCmd.PersistentFlags().StringVar(&dataFile, "datafile", home+string(os.PathSeparator)+".tridos.json", "data file to store todos")
 }
 
 
